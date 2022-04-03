@@ -46,7 +46,7 @@ class AdvertisementSerializer(serializers.ModelSerializer):
             user_objects = Advertisement.objects.filter(
                 creator=self.context["request"].user, status='OPEN')
             if self.context["request"].method == 'PATCH':
-                if data['status'] == 'OPEN' and len(user_objects) >= 10:
+                if data.get('status') == 'OPEN' and len(user_objects) >= 10:
                     raise serializers.ValidationError(
                         {"status": "You have 10 or more open ads"})
             if self.context["request"].method == 'POST' and len(user_objects) >= 10:
